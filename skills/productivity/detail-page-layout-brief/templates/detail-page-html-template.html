@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head><meta charset="UTF-8">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{width:830px;font-family:"PingFang SC","Microsoft YaHei","Helvetica Neue",Arial,sans-serif;background:#fff;color:#2c3a44;line-height:1.7}
+
+/* 顶部导航 - 品牌深色底 */
+.topbar{display:flex;justify-content:space-between;align-items:center;padding:22px 40px;background:{{BRAND_DARK}}}
+.topbar-logo{height:30px}
+.topbar-badge{color:rgba(255,255,255,.65);font-size:11px;letter-spacing:2px}
+
+/* 产品主图 */
+.hero-wrap{position:relative;height:420px;overflow:hidden;background:#0a1a2a}
+.hero-wrap img{width:100%;height:100%;object-fit:cover;opacity:.85}
+.hero-overlay{position:absolute;bottom:0;left:0;right:0;padding:50px 40px 28px;background:linear-gradient(to top,rgba(15,42,61,.96) 0%,transparent 100%)}
+.hero-overlay h1{font-size:38px;font-weight:700;color:#fff;letter-spacing:5px}
+.hero-overlay .tagline{font-size:14px;color:rgba(255,255,255,.7);letter-spacing:2px;margin-top:3px}
+.hero-overlay .ver{display:inline-block;vertical-align:middle;margin-left:10px;background:linear-gradient(135deg,{{BRAND_PRIMARY}},#2ba292);color:#fff;font-size:12px;padding:2px 12px;border-radius:10px;letter-spacing:1px;position:relative;top:-6px}
+
+/* SKU互引链接 - 紫色特征色 */
+.cross-link{display:inline-flex;align-items:center;gap:6px;margin-top:12px;background:rgba(99,52,200,.55);border:1px solid rgba(139,92,246,.4);color:#e8ddfd;font-size:13px;padding:8px 18px;border-radius:20px;letter-spacing:1px;text-decoration:none}
+.cross-link .click-icon{width:16px;height:auto;opacity:.85}
+.cross-link .click-label{color:rgba(196,181,253,.7);font-size:11px}
+.cross-link .arr{font-size:14px;margin-left:2px}
+
+/* 板块通用 */
+.section{padding:32px 40px}
+.section-label{display:inline-block;font-size:12px;color:{{BRAND_PRIMARY}};letter-spacing:3px;font-weight:600;padding-bottom:6px;border-bottom:2px solid;border-image:linear-gradient(90deg,{{BRAND_PRIMARY}},{{ACCENT_COLOR}}) 1;margin-bottom:16px}
+
+/* 关键数据 */
+.stats-row{display:flex;background:{{BRAND_LIGHT}};border-radius:10px;overflow:hidden}
+.stat{flex:1;text-align:center;padding:14px 4px;border-right:1px solid rgba(19,144,122,.12)}
+.stat:last-child{border-right:none}
+.stat .n{font-size:24px;font-weight:700;color:{{BRAND_PRIMARY}}}
+.stat .u{font-size:12px;font-weight:400}
+.stat .l{font-size:11px;color:#6b9b92;margin-top:1px}
+
+/* 简介 */
+.intro{font-size:14px;color:#4a5c66;line-height:2}
+
+/* 参数表 */
+.spec-table{width:100%;border-collapse:collapse;font-size:13px;margin-top:4px}
+.spec-table td{padding:10px 16px;border-bottom:1px solid #e8f0ed;vertical-align:top}
+.spec-table .p{color:#7a9290;width:160px;font-size:12px}
+.spec-table .v{color:#213e56;font-weight:600}
+
+/* 核心亮点 - 特征色左边框 */
+.hl-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.hl-card{background:#fff;border:1px solid #e0ece7;border-radius:10px;padding:18px 20px;border-left:3px solid {{ACCENT_COLOR}}}
+.hl-card h3{font-size:14px;color:{{BRAND_PRIMARY}};margin-bottom:6px}
+.hl-card ul{list-style:none;font-size:12px;color:#4a6b64}
+.hl-card li{padding:1px 0}
+.hl-card li::before{content:'▪ ';color:{{ACCENT_COLOR}}}
+
+/* 应用场景 */
+.scene-section{background:#f8fbfa;border-top:1px solid #e8f0ed;border-bottom:1px solid #e8f0ed}
+.scene-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin-top:6px}
+.scene-card{border-radius:8px;overflow:hidden;position:relative;height:180px;background:#e0ece7}
+.scene-card img{width:100%;height:100%;object-fit:cover}
+.scene-card .cap{position:absolute;bottom:0;left:0;right:0;background:linear-gradient(to top,rgba(0,0,0,.75),transparent);color:#fff;font-size:11px;padding:20px 10px 8px;text-align:center;letter-spacing:1px}
+
+/* 装饰图行 */
+.deco-row{display:flex;gap:10px;margin-bottom:16px}
+.deco-row .deco{flex:1;height:140px;border-radius:8px;overflow:hidden}
+.deco-row .deco img{width:100%;height:100%;object-fit:cover}
+
+/* 企业 */
+.company{font-size:14px;color:#4a5c66;line-height:2}
+.metric-row{display:flex;gap:10px;margin-top:14px}
+.metric{flex:1;text-align:center;padding:12px 6px;background:{{BRAND_LIGHT}};border-radius:8px}
+.metric .n{font-size:20px;font-weight:700;color:{{BRAND_PRIMARY}}}
+.metric .d{font-size:10px;color:#6b9b92;margin-top:1px}
+
+.footer{text-align:center;padding:30px;color:#96b2ab;font-size:11px;letter-spacing:1px;border-top:1px solid #e8f0ed}
+</style>
+</head>
+<body>
+
+<!-- 顶部导航 -->
+<div class="topbar">
+<img class="topbar-logo" src="file:///tmp/{{BRAND_LOGO}}" alt="{{COMPANY_SHORT}}" />
+<div class="topbar-badge">{{CATEGORY_BADGE}}</div>
+</div>
+
+<!-- 产品主图 + 互引链接 -->
+<div class="hero-wrap">
+<img src="file:///tmp/{{HERO_IMAGE}}" alt="{{PRODUCT_NAME}}" />
+<div class="hero-overlay">
+<h1>{{PRODUCT_NAME}}<span class="ver">{{VERSION_TAG}}</span></h1>
+<div class="tagline">{{PRODUCT_SUBTITLE}}</div>
+<a class="cross-link" href="{{CROSS_SKU_URL}}"><img class="click-icon" src="file:///tmp/{{CLICK_ICON}}" /><span class="click-label">点击查看：</span>{{CROSS_SKU_NAME}} <span class="arr">→</span></a>
+</div>
+</div>
+
+<!-- 关键参数 -->
+<div class="section" style="padding-bottom:10px">
+<div class="stats-row">
+{{STATS_ROW}}
+</div>
+</div>
+
+<!-- 产品概述 -->
+<div class="section" style="padding-top:0">
+<div class="section-label">产品概述</div>
+<p class="intro">{{PRODUCT_INTRO}}</p>
+</div>
+
+<!-- 技术参数 -->
+<div class="section">
+<div class="section-label">技术参数</div>
+<table class="spec-table">
+{{SPEC_ROWS}}
+</table>
+</div>
+
+<!-- 核心亮点 -->
+{{FEATURE_SECTION}}
+
+<!-- 装饰图行（可选） -->
+{{DECO_SECTION}}
+
+<!-- 应用场景（可选） -->
+{{SCENE_SECTION}}
+
+<!-- 企业介绍 -->
+<div class="section">
+<div class="section-label">关于{{COMPANY_SHORT}}</div>
+<p class="company">{{COMPANY_INTRO}}</p>
+<div class="metric-row">
+{{METRICS}}
+</div>
+</div>
+
+<div class="footer"><span style="color:{{BRAND_PRIMARY}};">●</span> {{COMPANY_SHORT}} {{COMPANY_EN}} · {{CATEGORY_PATH}} · {{BRAND_TAGLINE}}</div>
+
+</body>
+</html>

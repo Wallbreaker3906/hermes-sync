@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>{PAGE_TITLE}</title>
+<style>
+  :root {
+    --bg: #0a0e14; --card-bg: #141b22; --border: #1e293b;
+    --text: #c9d1d9; --text-muted: #8b949e; --accent: #58a6ff;
+    --accent2: #f78166; --accent3: #7ee787; --tag-bg: #1a2332;
+    --tag-text: #79c0ff; --divider: #1c2534; --step-bg: #0f1724;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    background: var(--bg); color: var(--text);
+    font-family: -apple-system, 'SF Pro Display', 'PingFang SC', 'Microsoft YaHei', sans-serif;
+    line-height: 1.7; min-height: 100vh;
+  }
+  body::before {
+    content: ''; position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+    background: radial-gradient(ellipse at 20% 0%, rgba(88,166,255,0.04) 0%, transparent 50%),
+                radial-gradient(ellipse at 80% 100%, rgba(88,166,255,0.02) 0%, transparent 50%);
+    pointer-events: none; z-index: 0;
+  }
+  header {
+    padding: 3rem 2rem 2rem; text-align: center;
+    border-bottom: 1px solid var(--divider); position: relative; z-index: 1;
+  }
+  header h1 {
+    font-size: 2rem; font-weight: 700; letter-spacing: -0.02em;
+    background: linear-gradient(135deg, #e6edf3 0%, var(--accent) 100%);
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+  }
+  header p { margin-top: 0.5rem; color: var(--text-muted); font-size: 0.9rem; }
+  header .stats { margin-top: 1rem; display: flex; justify-content: center; gap: 1.5rem; flex-wrap: wrap; }
+  header .stats span { font-size: 0.8rem; color: var(--text-muted); background: var(--tag-bg); padding: 0.3rem 0.9rem; border-radius: 999px; }
+  header .stats span strong { color: var(--accent); }
+  main { max-width: 920px; margin: 0 auto; padding: 2rem; position: relative; z-index: 1; }
+  .day-section { margin-bottom: 3rem; }
+  .day-header { display: flex; align-items: center; gap: 0.75rem; margin-bottom: 1.5rem; }
+  .day-header .dot { width: 8px; height: 8px; background: var(--accent); border-radius: 50%; box-shadow: 0 0 10px rgba(88,166,255,0.5); }
+  .day-header h2 { font-size: 1.1rem; font-weight: 600; color: #e6edf3; }
+  .day-header .date-badge { font-size: 0.78rem; color: var(--text-muted); background: var(--tag-bg); padding: 0.2rem 0.7rem; border-radius: 999px; }
+  .cases-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1rem; }
+
+  .case-card { background: var(--card-bg); border: 1px solid var(--border); border-radius: 14px; overflow: hidden; transition: border-color 0.2s, box-shadow 0.2s; cursor: pointer; position: relative; }
+  .case-card:hover { border-color: rgba(88,166,255,0.3); box-shadow: 0 4px 24px rgba(88,166,255,0.06); }
+  .case-card.active { border-color: rgba(88,166,255,0.5); box-shadow: 0 0 32px rgba(88,166,255,0.1); }
+  .case-card-inner { padding: 1.5rem; }
+  .case-card .emoji { font-size: 1.5rem; margin-bottom: 0.5rem; }
+  .case-title { font-size: 1rem; font-weight: 600; color: #e6edf3; line-height: 1.4; margin-bottom: 0.3rem; }
+  .case-subtitle { font-size: 0.82rem; color: var(--text-muted); margin-bottom: 0.75rem; }
+  .tags { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-bottom: 0.75rem; }
+  .tag { font-size: 0.72rem; padding: 0.15rem 0.6rem; border-radius: 999px; background: var(--tag-bg); color: var(--tag-text); }
+  .tag.industry { color: var(--accent2); }
+  .tag.role { color: var(--accent3); }
+  .case-section { margin-bottom: 0.75rem; }
+  .case-section h4 { font-size: 0.75rem; font-weight: 600; color: var(--accent); text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 0.3rem; }
+  .case-section p { font-size: 0.84rem; color: var(--text-muted); }
+  .click-hint { font-size: 0.75rem; color: var(--text-muted); display: flex; align-items: center; gap: 0.35rem; padding: 0.4rem 0 0; border-top: 1px solid var(--divider); margin-top: 0.75rem; opacity: 0.7; transition: opacity 0.2s; }
+  .case-card:hover .click-hint, .case-card.active .click-hint { opacity: 1; }
+  .click-hint .arrow { display: inline-block; transition: transform 0.3s; font-size: 0.7rem; }
+  .case-card.active .click-hint .arrow { transform: rotate(180deg); }
+
+  .case-detail { max-height: 0; overflow: hidden; transition: max-height 0.45s ease, opacity 0.25s ease; background: #0d1520; border-top: 1px solid transparent; opacity: 0; }
+  .case-card.active .case-detail { max-height: 3000px; border-top-color: rgba(88,166,255,0.15); opacity: 1; }
+  .case-detail-inner { padding: 1.5rem; }
+  .case-detail-inner h3 { font-size: 0.88rem; color: #e6edf3; margin-bottom: 1.25rem; display: flex; align-items: center; gap: 0.5rem; }
+  .case-detail-inner h3::after { content: ''; flex: 1; height: 1px; background: var(--divider); }
+  .step-block { background: var(--step-bg); border: 1px solid var(--border); border-radius: 10px; padding: 1rem 1.2rem; margin-bottom: 0.75rem; border-left: 3px solid var(--accent); transition: border-color 0.2s; }
+  .step-block:hover { border-color: rgba(88,166,255,0.4); }
+  .step-header { font-size: 0.82rem; font-weight: 600; color: #e6edf3; margin-bottom: 0.35rem; }
+  .step-number { display: inline-block; background: rgba(88,166,255,0.15); color: var(--accent); font-size: 0.7rem; font-weight: 700; padding: 0.1rem 0.45rem; border-radius: 4px; margin-right: 0.5rem; }
+  .step-body { font-size: 0.8rem; color: var(--text-muted); line-height: 1.65; }
+  .step-body code { background: rgba(88,166,255,0.1); color: #a5d8ff; padding: 0.1rem 0.4rem; border-radius: 4px; font-size: 0.78rem; }
+  .highlight-box { background: rgba(88,166,255,0.07); border: 1px solid rgba(88,166,255,0.12); border-radius: 8px; padding: 0.65rem 0.9rem; font-size: 0.8rem; color: #a5d8ff; margin-top: 0.5rem; }
+  footer { text-align: center; padding: 3rem 2rem; color: var(--text-muted); font-size: 0.78rem; border-top: 1px solid var(--divider); margin-top: 2rem; position: relative; z-index: 1; }
+  @media (max-width: 600px) { main { padding: 1rem; } header h1 { font-size: 1.5rem; } .case-card-inner { padding: 1.1rem; } .case-detail-inner { padding: 1.1rem; } }
+</style>
+</head>
+<body>
+<header>
+  <h1>{HEADER_TITLE}</h1>
+  <p>{HEADER_SUBTITLE}</p>
+  <div class="stats">
+    <span>📅 累计 <strong>1</strong> 天</span>
+    <span>📋 累计 <strong>3</strong> 个案例</span>
+    <span>🏭 覆盖 <strong>3</strong> 个行业</span>
+  </div>
+</header>
+<main>
+<!-- DAILY_CASES_START -->
+
+<!-- ======================================== -->
+<!-- 📅 {FIRST_DAY_DATE} (Day 1) -->
+<!-- ======================================== -->
+<div class="day-section">
+  <div class="day-header">
+    <div class="dot"></div>
+    <h2>Day 1</h2>
+    <span class="date-badge">{FIRST_DAY_DATE}</span>
+  </div>
+  <div class="cases-row">
+
+    <div class="case-card" onclick="this.classList.toggle('active')">
+      <div class="case-card-inner">
+        <div class="emoji">📘</div>
+        <div class="case-title">标题</div>
+        <div class="case-subtitle">一句话概括</div>
+        <div class="tags"><span class="tag industry">行业</span><span class="tag role">角色</span><span class="tag">任务类型</span></div>
+        <div class="case-section"><h4>📖 场景</h4><p>场景描述</p></div>
+        <div class="click-hint"><span class="arrow">▶</span> 点击展开详细操作流程</div>
+      </div>
+      <div class="case-detail">
+        <div class="case-detail-inner">
+          <h3>🔍 详细操作流程</h3>
+          <div class="step-block">
+            <div class="step-header"><span class="step-number">1</span> 步骤标题</div>
+            <div class="step-body">在终端输入：<code>具体指令</code>。说明执行方式。</div>
+          </div>
+          <div class="highlight-box">💡 <strong>效果：</strong>实际收益</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+<!-- END Day 1 -->
+
+<!-- DAILY_CASES_END -->
+</main>
+<footer>{FOOTER_TEXT}</footer>
+</body>
+</html>

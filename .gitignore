@@ -1,0 +1,12 @@
+# Sync repo .gitignore
+__pycache__/
+*.pyc
+.cache/
+*.lock
+.usage.json
+.curator_state
+.curator_backups/
+.bundled_manifest
+.hub/
+node_modules/
+.DS_Store

@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN"
+  "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>Label</key>
+    <string>ai.hermes.qq-healthcheck</string>
+
+    <key>ProgramArguments</key>
+    <array>
+        <string>/bin/bash</string>
+        <string>/Users/$USER/Library/Scripts/hermes-gateway-healthcheck.sh</string>
+    </array>
+
+    <!-- Run every 10 minutes -->
+    <key>StartInterval</key>
+    <integer>600</integer>
+
+    <!-- Also run once at load (boot/login) -->
+    <key>RunAtLoad</key>
+    <true/>
+
+    <key>StandardOutPath</key>
+    <string>/Users/$USER/.hermes/logs/qq-healthcheck.log</string>
+
+    <key>StandardErrorPath</key>
+    <string>/Users/$USER/.hermes/logs/qq-healthcheck.error.log</string>
+</dict>
+</plist>
