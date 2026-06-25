@@ -1,3 +1,4 @@
+§
 宿主环境：macOS 15.7.7 (Apple Silicon arm64)，无 Homebrew，npm 在 ~/.local/bin/npm，git 可用。DeepSeek provider，已配 GITHUB_TOKEN。
 §
 两个 QQ Bot 通过 Profile 架构运行：Bot① 1904086414（default），Bot② 1904114200（qqbot2）。各独立 Gateway+launchd+健康检查。休眠后自动恢复。都不要 ALLOW_ALL_USERS=true。QQ Open ID 各应用独立。
@@ -26,7 +27,7 @@ macOS 沙盒：Desktop 写入权限不稳定（TCC 间歇拦截 Python/shell）�
 §
 权益履约追踪表规则：①进度分四级——未申请/已申请/进行中/已完成。「已申请」=权益已启用、有部分完成但剩余未启动；「进行中」=当前正在推进。②I列(完成情况简述)面向客户，仅「已申请」「已完成」时填写；「未申请」「进行中」留白。③铂金会员模板：~/Documents/【模板】铂金会员权益事项说明_20260616.xlsx。
 §
-生成Word文档（.docx）默认字体使用宋体或微软雅黑，不要用其他字体。
+文档字体：Word默认宋体/微软雅黑；详情页PNG必须用思源/阿里普惠等开源商用字体，禁用系统专有(PingFang等)。答案不确定时必须标注来源及风险，不给无依据的确定性结论。
 §
 共享目录 ~/.hermes/shared/ 可绕过沙盒读写，永久保留不被清理，已加 Finder 侧边栏。用户无 iCloud Drive 选项，远程备份用 Git 私有仓库。后需用户手动放入工作文件。
 §
@@ -34,6 +35,4 @@ macOS 沙盒：Desktop 写入权限不稳定（TCC 间歇拦截 Python/shell）�
 §
 常玻(supplierID=131)：常州玻璃钢造船厂有限公司。船舶建造→水上运动休闲→游览船(003)。2SKU：CB2600仿古(排序2580,后6位000004)、CB2800新能源(排序2581,后6位000005)。船舶建造排序最后=2583，新增从2584起。后6位按三级分类编号：游览船(003)最后=000005；无人艇(008)最后=000028(欧卡沧巡000027-28)。
 §
-HTML源文件生成后必须永久保存，禁止存放在/tmp/等临时目录（会被清理）。详情页、网页等HTML统一存到 ~/.hermes/shared/ 对应子目录下，方便后续修改。用户对此非常在意。
-§
-用户有两台 Mac，旧电脑不淘汰带回家用。需要 Hermes 的记忆和技能在两台电脑间通过 Git 私有仓库同步，类似已有 hermes-cases。可设自动推送拉取（开/关机触发）。
+两台Mac间同步：私有仓库 Wallbreaker3906/hermes-sync（SSH: id_ed25519_hermes）。本地 ~/.hermes/sync/ 存 memories/ skills/ config.yaml。换电脑前说「同步一下」=push，换后说「同步一下」=pull。旧电脑明天开机后首次克隆。
